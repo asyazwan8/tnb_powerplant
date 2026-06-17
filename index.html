@@ -181,38 +181,6 @@
     z-index:5;
   }
 
-  /* ---------- specs ---------- */
-  .specs{padding:46px 0 10px;}
-  .specs-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:0;
-    border-top:1px solid var(--hair);
-    border-bottom:1px solid var(--hair);
-  }
-  .spec{
-    padding:26px 22px;
-    border-right:1px solid var(--hair);
-  }
-  .spec:last-child{border-right:none;}
-  .spec .k{
-    font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;
-    color:var(--mute);font-weight:600;margin-bottom:8px;
-  }
-  .spec .v{
-    font-family:var(--display);
-    font-weight:700;
-    font-size:26px;
-    color:var(--tnb-blue);
-    line-height:1;
-  }
-  .spec .v small{font-size:13px;color:var(--slate);font-weight:600;}
-  @media (max-width:720px){
-    .specs-grid{grid-template-columns:repeat(2,1fr);}
-    .spec:nth-child(2){border-right:none;}
-    .spec:nth-child(1),.spec:nth-child(2){border-bottom:1px solid var(--hair);}
-  }
-
   /* ---------- footer ---------- */
   footer.site{
     margin-top:56px;
@@ -246,11 +214,6 @@
     .view-toolbar{left:12px;bottom:12px;gap:6px;}
     .vbtn{padding:9px 12px;font-size:11px;}
     .view-hint{top:14px;right:14px;bottom:auto;left:auto;font-size:10px;}
-
-    .specs{padding:32px 0 6px;}
-    .spec{padding:18px 14px;}
-    .spec .k{font-size:10.5px;}
-    .spec .v{font-size:21px;}
 
     footer.site{margin-top:40px;}
     footer.site .wrap{padding-top:24px;padding-bottom:24px;}
@@ -319,18 +282,6 @@
     </div>
   </section>
 
-  <!-- specs -->
-  <section class="specs">
-    <div class="wrap">
-      <div class="specs-grid">
-        <div class="spec"><div class="k">Triangles</div><div class="v" id="specTriangles">338.9<small>K</small></div></div>
-        <div class="spec"><div class="k">Vertices</div><div class="v" id="specVertices">186.2<small>K</small></div></div>
-        <div class="spec"><div class="k">Format</div><div class="v" id="specFormat">glTF <small>Draco</small></div></div>
-        <div class="spec"><div class="k">License</div><div class="v" id="specLicense">CC&nbsp;BY <small>4.0</small></div></div>
-      </div>
-    </div>
-  </section>
-
   <!-- footer -->
   <footer class="site">
     <div class="wrap">
@@ -354,8 +305,7 @@
         lede: 'An interactive, browser-based view of a classical twin-reactor nuclear power plant. Drag to orbit, scroll to zoom, and inspect the structure from any angle — rendered live in your browser.',
         cameraOrbit: '35deg 72deg auto',
         minOrbit: 'auto 0deg auto',
-        maxOrbit: 'auto 95deg auto',
-        specs: { triangles: '338.9K', vertices: '186.2K', format: 'glTF Draco', license: 'CC BY 4.0' }
+        maxOrbit: 'auto 95deg auto'
       },
       reactor: {
         src: './models/pwr_nuclear_reactor.glb',
@@ -365,8 +315,7 @@
         lede: 'A close-up, browser-based view of a pressurized water reactor (PWR). Drag to orbit, scroll to zoom, and inspect the core structure from any angle — rendered live in your browser.',
         cameraOrbit: '25deg 75deg auto',
         minOrbit: 'auto 15deg auto',
-        maxOrbit: 'auto 140deg auto',
-        specs: { triangles: '46.4K', vertices: '40.2K', format: 'glTF Draco', license: 'Pending' }
+        maxOrbit: 'auto 140deg auto'
       }
     };
 
@@ -375,13 +324,6 @@
     const btnRotate = document.getElementById('btnRotate');
     const btnReset = document.getElementById('btnReset');
     const tabs = document.querySelectorAll('.mtab');
-
-    function applySpecs(specs){
-      document.getElementById('specTriangles').innerHTML = specs.triangles.replace(/K$/,'<small>K</small>');
-      document.getElementById('specVertices').innerHTML = specs.vertices.replace(/K$/,'<small>K</small>');
-      document.getElementById('specFormat').innerHTML = specs.format.replace(' ', ' <small>') + '</small>';
-      document.getElementById('specLicense').innerHTML = specs.license.replace(' ', '&nbsp;').replace(/(\d.*)$/, '<small>$1</small>');
-    }
 
     function switchModel(key){
       const m = MODELS[key];
@@ -399,7 +341,6 @@
       document.getElementById('heroEyebrow').textContent = m.eyebrow;
       document.getElementById('heroTitle').innerHTML = m.titleHTML;
       document.getElementById('heroLede').textContent = m.lede;
-      applySpecs(m.specs);
 
       tabs.forEach(t => {
         const active = t.dataset.model === key;
